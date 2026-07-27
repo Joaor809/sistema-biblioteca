@@ -1,0 +1,20 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fundoAzul" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- fundo -->
+  <rect x="0" y="0" width="100" height="100" rx="22" fill="url(#fundoAzul)"/>
+
+  <!-- perna esquerda do "A" (livro inclinado p/ esquerda) -->
+  <polygon points="46,18 54,18 34,82 18,82" fill="#ffffff"/>
+
+  <!-- perna direita do "A" (livro inclinado p/ direita) -->
+  <polygon points="46,18 54,18 82,82 66,82" fill="#ffffff"/>
+
+  <!-- travessa em forma de fita/marcador de página -->
+  <polygon points="34,54 66,54 66,64 58,60 50,64 42,60 34,64" fill="#93c5fd"/>
+</svg>

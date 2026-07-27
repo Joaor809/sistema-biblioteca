@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Livros</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../public/css/cadastrarLivros.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="../public/img/acervis-icone.svg" alt="Logotipo">
+        </div>
+        <div class="nav-links">
+            <a href="./dashboard.html"><i class="bi bi-house"></i> Início</a>
+            <a href="./cadastroLivros.html"><i class="bi bi-book"></i> Livros</a>
+            <a href="./cadastroLeitor.html"><i class="bi bi-people"></i> Leitores</a>
+            <a href="./emprestimos.html"><i class="bi bi-arrow-left-right"></i> Empréstimos</a>
+        </div>
+    </nav>
+    <div class="container">
+        <header>
+            <h3>Cadastro de Livros</h3>
+            <span>Adicione e gerencie o acervo da biblioteca</span>
+        </header>
+        <main>
+            <section class="card-register">
+                <h3>Novo livro</h3>
+                <span>Preencha os dados abaixo para cadastrar um livro no acervo</span>
+                <form action="http://localhost:3000/registerBooks" method="post">
+                    <div class="form-groups">
+                        <div class="form-group">
+                            <label>Nome do livro</label>
+                            <input type="text" placeholder="Ex: Dom Casmurro" id="nome">
+                        </div>
+                        <div class="form-group">
+                            <label>Autor</label>
+                            <input type="text" placeholder="Ex: Machado de Assis" id="autor">
+                        </div>
+                        <div class="form-group">
+                            <label>Ano de publicação</label>
+                            <input type="text" placeholder="Ex: 1899" id="ano">
+                        </div>
+                        <div class="form-group">
+                            <label>Editora</label>
+                            <input type="text" placeholder="Ex: Ática" id="editora">
+                        </div>
+                    </div>
+                    <div class="btn-register">
+                        <button type="submit"><i class="bi bi-plus" id="btn-register"></i> Cadastrar Livro</button>
+                    </div>
+                </form>
+            </section>
+            <section class="books">
+                <h3>Livros cadastrados</h3>
+                <span>Lista de todos os livros cadastrados do acervo</span>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>TÍTULO</th>
+                            <th>AUTOR</th>
+                            <th>ANO</th>
+                            <th>EDITORA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Dom Casmurro</td>
+                            <td>Machado de Assim</td>
+                            <td>1899</td>
+                            <td>Ática</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Dom Casmurro</td>
+                            <td>Machado de Assim</td>
+                            <td>1899</td>
+                            <td>Ática</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+<script src="../public/js/cadastrarLivros.js"></script>
+</html>
