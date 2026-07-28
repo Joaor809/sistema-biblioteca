@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Leitores</title>
+    <link rel="stylesheet" href="../public/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../public/css/cadastrarLivros.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="../public/img/acervis-icone.svg" alt="Logotipo">
+        </div>
+        <div class="nav-links">
+            <a href="http://localhost:3000/"><i class="bi bi-house"></i> Início</a>
+            <a href="http://localhost:3000/cadastro"><i class="bi bi-book"></i> Livros</a>
+            <a href="http://localhost:3000/leitores" id="active"><i class="bi bi-people"></i> Leitores</a>
+            <a href="http://localhost:3000/emprestimo"><i class="bi bi-arrow-left-right"></i> Empréstimos</a>
+        </div>
+    </nav>
+    <div class="container">
+        <header>
+            <h3>Cadastro de Leitores</h3>
+            <span>Adicione e gerencie os leitores da biblioteca</span>
+        </header>
+        <main>
+            <section class="card-register">
+                <h3>Novo leitor</h3>
+                <span>Preencha os dados abaixo para cadastrar um leitor</span>
+                <form action="http://localhost:3000/registerBooks" method="post">
+                    <div class="form-groups">
+                        <div class="form-group">
+                            <label>Nome completo</label>
+                            <input type="text" placeholder="Ex: Maria Oliveira" id="nome">
+                        </div>
+                        <div class="form-group">
+                            <label>telefone</label>
+                            <input type="text" placeholder="Ex: (35) 99999-0000" id="telefone">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" placeholder="Ex: exemplo@email.com" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label>CPF</label>
+                            <input type="text" placeholder="Ex: 000.000.000-01" id="cpf">
+                        </div>
+                    </div>
+                    <div class="btn-register">
+                        <button type="submit"><i class="bi bi-plus" id="btn-register"></i> Cadastrar Leitor</button>
+                    </div>
+                </form>
+            </section>
+            <section class="books">
+                <h3>Leitores cadastrados</h3>
+                <span>Lista de todos os leitores registrados</span>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NOME</th>
+                            <th>TELEFONE</th>
+                            <th>EMAIL</th>
+                            <th>CPF</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list-books">
+                        
+                    </tbody>
+                </table>
+                <div class="loading"></div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

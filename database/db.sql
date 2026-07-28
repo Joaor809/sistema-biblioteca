@@ -24,4 +24,3 @@ create table emprestimos(
     foreign key (livro_id) references livros(id),
     foreign key (leitor_id) references leitores(id)
 );
-select * from livros;

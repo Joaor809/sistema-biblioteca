@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Livros</title>
-    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../public/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../public/css/cadastrarLivros.css">
 </head>
 
@@ -15,10 +15,10 @@
             <img src="../public/img/acervis-icone.svg" alt="Logotipo">
         </div>
         <div class="nav-links">
-            <a href="./dashboard.html"><i class="bi bi-house"></i> Início</a>
-            <a href="./cadastroLivros.html"><i class="bi bi-book"></i> Livros</a>
-            <a href="./cadastroLeitor.html"><i class="bi bi-people"></i> Leitores</a>
-            <a href="./emprestimos.html"><i class="bi bi-arrow-left-right"></i> Empréstimos</a>
+            <a href="http://localhost:3000/"><i class="bi bi-house"></i> Início</a>
+            <a href="http://localhost:3000/cadastro" id="active"><i class="bi bi-book"></i> Livros</a>
+            <a href="http://localhost:3000/leitores"><i class="bi bi-people"></i> Leitores</a>
+            <a href="http://localhost:3000/emprestimo"><i class="bi bi-arrow-left-right"></i> Empréstimos</a>
         </div>
     </nav>
     <div class="container">
@@ -67,23 +67,11 @@
                             <th>EDITORA</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Dom Casmurro</td>
-                            <td>Machado de Assim</td>
-                            <td>1899</td>
-                            <td>Ática</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Dom Casmurro</td>
-                            <td>Machado de Assim</td>
-                            <td>1899</td>
-                            <td>Ática</td>
-                        </tr>
+                    <tbody class="list-books">
+                        
                     </tbody>
                 </table>
+                <div class="loading"></div>
             </section>
         </main>
     </div>
