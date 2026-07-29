@@ -1,5 +1,6 @@
 import formatarTelefone from "./formatarCelular.js";
 import formatarCpf from "./formatarCPF.js";
+import apagarUser from "./apagarUser.js";
 
 const form = document.querySelector("form");
 
@@ -37,15 +38,15 @@ form.addEventListener("submit", async (event) => {
     const name = document.getElementById("nome").value;
     const email = document.getElementById("email").value;
 
-    if (name === ""){
+    if (name === "") {
         alert("Preencha todos os campos!");
-    } else if (email === ""){
+    } else if (email === "") {
         alert("Preencha todos os campos!");
-    } else if (telefoneNumeros === ""){
+    } else if (telefoneNumeros === "") {
         alert("Preencha todos os campos!");
-    } else if (cpfNumeros === ""){
+    } else if (cpfNumeros === "") {
         alert("Preencha todos os campos!");
-    } else{
+    } else {
         const response = await fetch("http://localhost:3000/registerReader", {
             method: "POST",
             headers: {
@@ -66,10 +67,10 @@ form.addEventListener("submit", async (event) => {
 
 
 const tableBody = document.querySelector(".list-readers");
-async function buscarLeitores(){
+async function buscarLeitores() {
     const carregamento = document.querySelector(".loading");
 
-    try{
+    try {
         const resposta = await fetch("http://localhost:3000/readers");
         const dados = await resposta.json();
         tableBody.innerHTML = "";
@@ -77,10 +78,10 @@ async function buscarLeitores(){
         if (dados.success === false) {
             tableBody.innerHTML = `
             <tr>
-                <td colspan="5">Erro ao buscar livros</td>
+                <td colspan="5">Erro ao buscar leitores</td>
             </tr>
             `;
-        } else if(dados.length === 0) {
+        } else if (dados.length === 0) {
             tableBody.innerHTML = `
             <tr>
                 <td colspan='6'>Nenhum leitor cadastrado</td>
@@ -88,9 +89,9 @@ async function buscarLeitores(){
         } else {
             criarDado(dados);
         }
-    } catch(error){
+    } catch (error) {
         tableBody.innerHTML = "<td colspan='6'>Erro ao buscar leitores</td>"
-    } finally{
+    } finally {
         carregamento.style.display = "none";
     }
 }
@@ -102,15 +103,45 @@ function criarDado(dados) {
         <td>${user.id}</td>
         <td>${user.nome}</td>
         <td>${formatarTelefone(user.telefone)}</td>
-        <td>${formatarCpf(user.cpf)}</td>
         <td>${user.email}</td>
+        <td>${formatarCpf(user.cpf)}</td>
         <td>
-            <button><i class='bi bi-pen'></i>  Editar</button>
-            <button><i class='bi bi-trash'></i>  Apagar</button>
+            <button id='btn-edit'><i class='bi bi-pen'></i> Editar</button>
+            <button id='btn-trash'><i class='bi bi-trash'"></i> Apagar</button>
         </td>
         `;
         tableBody.appendChild(tableRow);
+        const btnTrash = document.querySelector("#btn-trash");
+        btnTrash.addEventListener("click", () => {
+            apagarUser(user.id)
+        });
     });
 }
 
 buscarLeitores();
+
+async function editarUser(id) {
+    const response = await fetch(`http://localhost:3000/books/${id}`);
+    const dados = await response.json();
+
+    idEditando = dados.id;
+
+    const inputNome = document.getElementById("nome");
+    const inputTelefone = document.getElementById("telefone");
+    const inputEmail = document.getElementById("email");
+    const inputCpf = document.getElementById("cpf");
+
+    inputNome.value = dados.nome;
+    inputTelefone.value = dados.telefone;
+    inputEmail.value = dados.email;
+    inputCpf.value = dados.cpf;
+    
+    await fetch(`http://localhost:3000/readersEdit/${idEditando}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dados)
+    })
+
+}

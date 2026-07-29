@@ -92,6 +92,56 @@ app.get("/books", async (req, res) => {
         });
     }
 });
+
+app.delete("/readers/:id", async (req, res) => {
+    const { id } = req.params;
+
+    const sql = "DELETE FROM leitores WHERE id = ?";
+
+    try{
+        await conn.query(sql, [id]);
+        res.status(200).json({
+            success: true,
+            message: "Leitor deletado"
+        })
+    } catch(error){
+        res.status(500).json({
+            success: false,
+            message: "Erro ao procurar livros"
+        });
+    }
+});
+
+app.get("/readers/:id", async (req, res) => {
+    const { id } = req.params;
+    
+    try{
+        const [dados] = await conn.query("SELECT * FROM leitores WHERE id = ?", [id]);
+        res.send(dados);
+    } catch(error){
+        res.status(500).json({
+            success: false,
+            message: "Erro ao buscar livro"
+        });
+    }
+})
+
+app.put("/readersEdit/:id", async (req, res) => {
+    const { id } = req.params;
+    const { nome, email, telefone, cpf } = req.body;
+
+    await conn.query(
+        `UPDATE leitor
+         SET nome = ?, email = ?, telefone = ?, cpf = ?
+         WHERE id = ?`,
+        [nome, email, telefone, cpf, id]
+    );
+    res.json({
+        success: true,
+        message: "Livro atualizado com sucesso."
+    });
+});
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
