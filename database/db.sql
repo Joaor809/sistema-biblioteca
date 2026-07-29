@@ -10,9 +10,9 @@ create table livros(
 create table leitores(
     id int auto_increment primary key,
     nome varchar(100) not null,
-    telefone varchar(20),
-    email varchar(150),
-    cpf char(11)
+    telefone varchar(20) not null,
+    email varchar(150) not null,
+    cpf char(11) not null
 );
 create table emprestimos(
     id int auto_increment primary key,

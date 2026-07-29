@@ -8,15 +8,15 @@ form.addEventListener("submit", async (event) => {
     const year = Number(document.getElementById("ano").value);
     const publisher = document.getElementById("editora").value;
 
-    if(title == ""){
+    if (title == "") {
         alert("Preencha todos os campos!");
-    } else if(author === ""){
+    } else if (author === "") {
         alert("Preencha todos os campos!");
-    } else if(year === 0){
+    } else if (year === 0) {
         alert("Preencha todos os campos!");
-    } else if(publisher === ""){
+    } else if (publisher === "") {
         alert("Preencha todos os campos!");
-    } else{
+    } else {
         const response = await fetch("http://localhost:3000/registerBook", {
             method: "POST",
             headers: {
@@ -32,26 +32,35 @@ form.addEventListener("submit", async (event) => {
         const dados = await response.json();
         console.log(dados);
         form.reset();
+        buscarLivros();
     }
 });
 
-async function buscarLivros(){
+async function buscarLivros() {
     const carregamento = document.querySelector(".loading");
-    try{
+    try {
         const response = await fetch("http://localhost:3000/books");
         const dados = await response.json();
 
-        criarDado(dados);
-    }catch(error){
+        tableBody.innerHTML = "";
+        if (dados.success === false) {
+            tableBody.innerHTML = `
+            <tr>
+                <td colspan="5">Erro ao buscar livros</td>
+            </tr>
+            `;
+        } else {
+            criarDado(dados);
+        }
+    } catch (error) {
         console.log("Erro ao buscar livros");
-    }finally{
+    } finally {
         carregamento.style.display = "none";
     }
 }
-buscarLivros();
 
 const tableBody = document.querySelector(".list-books")
-function criarDado(dados){
+function criarDado(dados) {
     dados.forEach(livro => {
         const tableRow = document.createElement("tr");
         tableRow.innerHTML = `
@@ -64,3 +73,4 @@ function criarDado(dados){
         tableBody.appendChild(tableRow);
     });
 }
+buscarLivros();
