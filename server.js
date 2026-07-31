@@ -21,16 +21,20 @@ app.get("/", (req, res) => {
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 
-app.get("/cadastroLeitores", (req, res) => {
+app.get("/leitores", (req, res) => {
     res.sendFile(path.join(__dirname, "pages", "cadastroLeitor.html"))
 })
 
-app.get("/cadastroLivros", (req, res) => {
+app.get("/livros", (req, res) => {
     res.sendFile(path.join(__dirname, "pages", "cadastroLivros.html"));
 })
 
+app.get("/emprestimos", (req, res) => {
+    res.sendFile(path.join(__dirname, "pages", "emprestimos.html"));
+})
 
-app.post("/registerReader", async (req, res) => {
+
+app.post("/readers", async (req, res) => {
     const { name, email, telefoneNumeros, cpfNumeros } = req.body;
 
     const sql = "INSERT INTO leitores(nome, telefone, email, cpf) VALUES (?, ?, ?, ?)";
@@ -48,7 +52,7 @@ app.post("/registerReader", async (req, res) => {
     }
 })
 
-app.post("/registerBook", async (req, res) => {
+app.post("/books", async (req, res) => {
     const { title, author, year, publisher } = req.body;
 
     const sql = "INSERT INTO livros(titulo, autor, ano, editora) VALUES (?, ?, ?, ?)";
@@ -126,24 +130,8 @@ app.get("/readers/:id", async (req, res) => {
     }
 })
 
-app.put("/readersEdit/:id", async (req, res) => {
-    const { id } = req.params;
-    const { nome, email, telefone, cpf } = req.body;
-
-    await conn.query(
-        `UPDATE leitor
-         SET nome = ?, email = ?, telefone = ?, cpf = ?
-         WHERE id = ?`,
-        [nome, email, telefone, cpf, id]
-    );
-    res.json({
-        success: true,
-        message: "Livro atualizado com sucesso."
-    });
-});
 
 const port = process.env.PORT || 3000;
-
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
 });

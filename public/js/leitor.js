@@ -1,6 +1,6 @@
-import formatarTelefone from "./formatarCelular.js";
-import formatarCpf from "./formatarCPF.js";
-import apagarUser from "./apagarUser.js";
+import formatarTelefone from "../actions/formatarCelular.js";
+import formatarCpf from "../actions/formatarCPF.js";
+import apagarUser from "../actions/apagarUser.js";
 
 const form = document.querySelector("form");
 
@@ -47,7 +47,7 @@ form.addEventListener("submit", async (event) => {
     } else if (cpfNumeros === "") {
         alert("Preencha todos os campos!");
     } else {
-        const response = await fetch("http://localhost:3000/registerReader", {
+        const response = await fetch("http://localhost:3000/readers", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -62,11 +62,13 @@ form.addEventListener("submit", async (event) => {
         console.log(dados);
         tableBody.innerHTML = "";
         buscarLeitores();
+        form.reset();
     }
 });
 
 
 const tableBody = document.querySelector(".list-readers");
+
 async function buscarLeitores() {
     const carregamento = document.querySelector(".loading");
 
@@ -106,7 +108,6 @@ function criarDado(dados) {
         <td>${user.email}</td>
         <td>${formatarCpf(user.cpf)}</td>
         <td>
-            <button id='btn-edit'><i class='bi bi-pen'></i> Editar</button>
             <button id='btn-trash'><i class='bi bi-trash'"></i> Apagar</button>
         </td>
         `;
@@ -119,29 +120,3 @@ function criarDado(dados) {
 }
 
 buscarLeitores();
-
-async function editarUser(id) {
-    const response = await fetch(`http://localhost:3000/books/${id}`);
-    const dados = await response.json();
-
-    idEditando = dados.id;
-
-    const inputNome = document.getElementById("nome");
-    const inputTelefone = document.getElementById("telefone");
-    const inputEmail = document.getElementById("email");
-    const inputCpf = document.getElementById("cpf");
-
-    inputNome.value = dados.nome;
-    inputTelefone.value = dados.telefone;
-    inputEmail.value = dados.email;
-    inputCpf.value = dados.cpf;
-    
-    await fetch(`http://localhost:3000/readersEdit/${idEditando}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(dados)
-    })
-
-}

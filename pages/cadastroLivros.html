@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Livros</title>
     <link rel="stylesheet" href="../public/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../public/css/cadastro.css">
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 
 <body>
@@ -16,9 +16,9 @@
         </div>
         <div class="nav-links">
             <a href="http://localhost:3000/"><i class="bi bi-house"></i> Início</a>
-            <a href="http://localhost:3000/cadastroLivros" id="active"><i class="bi bi-book"></i> Livros</a>
-            <a href="http://localhost:3000/cadastroLeitores"><i class="bi bi-people"></i> Leitores</a>
-            <a href="http://localhost:3000/emprestimo"><i class="bi bi-arrow-left-right"></i> Empréstimos</a>
+            <a href="http://localhost:3000/livros" id="active"><i class="bi bi-book"></i> Livros</a>
+            <a href="http://localhost:3000/leitores"><i class="bi bi-people"></i> Leitores</a>
+            <a href="http://localhost:3000/emprestimos"><i class="bi bi-arrow-left-right"></i> Empréstimos</a>
         </div>
     </nav>
     <div class="container">
@@ -30,7 +30,7 @@
             <section class="card-register">
                 <h3>Novo livro</h3>
                 <span>Preencha os dados abaixo para cadastrar um livro no acervo</span>
-                <form action="http://localhost:3000/registerBooks" method="post">
+                <form action="http://localhost:3000/books" method="post">
                     <div class="form-groups">
                         <div class="form-group">
                             <label>Nome do livro</label>
@@ -76,5 +76,5 @@
         </main>
     </div>
 </body>
-<script type="module" src="../public/js/cadastrarLivros.js"></script>
+<script type="module" src="../public/js/livros.js"></script>
 </html>
