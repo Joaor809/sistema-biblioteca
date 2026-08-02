@@ -130,6 +130,51 @@ app.get("/readers/:id", async (req, res) => {
     }
 })
 
+app.post("/loan", async (req, res) => {
+    const { livro_id, leitor_id, data_emprestimo, data_devolucao } = req.body;
+
+    try{
+        const sql = "INSERT INTO emprestimos(livro_id, leitor_id, data_emprestimo, data_devolucao) VALUES(?, ?, ?, ?)";
+        
+        await conn.query(sql, [livro_id, leitor_id, data_emprestimo, data_devolucao]);
+        res.status(200).json({
+            success: true,
+            message: "Empréstimo registrado com sucesso"
+        })
+    } catch(error){
+        res.status(500).json({
+            success: false,
+            message: "Erro ao registrar empréstimo"
+        })
+    }
+});
+
+app.get("/loan", async (req, res) => {
+    try{
+        const sql = "select l.id, b.titulo, r.nome, l.data_emprestimo, l.data_devolucao, l.status from emprestimos l inner join livros b on l.livro_id = b.id inner join leitores r on l.leitor_id = r.id;";
+
+        const [emprestimos] = await conn.query(sql);
+
+        res.send(emprestimos)
+    } catch(error){
+        res.status(500).json({
+            success: false,
+            message: "Erro ao buscar empréstimos"
+        })
+    }
+})
+
+app.put("/loan", async (req, res) => {
+    const { id } = req.params;
+
+    const sql = "UPDATE emprestimos SET status = 'devolvido' WHERE id = ?";
+
+    await conn.query(sql, [id]);
+    res.json({
+        success: true,
+        message: "Livro devolvido!"
+    });
+})
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

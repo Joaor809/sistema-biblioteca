@@ -253,7 +253,7 @@ tbody td{
     flex-direction: column;
     padding: 22px;
     background: var(--card-color);
-    width: 96%;
+    width: 100%;
     border-radius: 12px;
 }
 .emprestimos .form-groups select{
@@ -269,4 +269,47 @@ tbody td{
     border-color: lightblue;
     box-shadow: 0 4px 10px #5632f5;
 }
+.emprestimos table{
+    width: 100%;
+}
 
+
+/* Diminuir o título do cabeçalho das tabelas e alterar o tamanho das colunas de acordo com os dados*/
+
+table thead {
+    font-size: 14px;
+}
+table{
+    width: 100%;
+    table-layout: fixed;
+}
+
+th,
+td {
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Botão do empréstimo */
+
+#devolver{
+    width: 70%;
+    height: 35px;
+    border-radius: 12px;
+    background-color: var(--btn-color);
+    color: var(--text-link);
+    font-weight: bold;
+    font-size: 15px;
+    border: none;
+    text-align: center;
+    transition: all .3s ease;
+}
+#devolver:hover{
+    transform: scale(1.01);
+    box-shadow: 0 2px 6px #1b1b1b;
+    color: var(--text-color);
+    background-color: var(--text-link);
+}
+#devolver:active{
+    transform: scale(0.97);
+}
