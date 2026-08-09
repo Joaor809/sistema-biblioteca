@@ -17,7 +17,7 @@ form.addEventListener("submit", async (event) => {
     } else if (publisher === "") {
         alert("Preencha todos os campos!");
     } else {
-        const response = await fetch("http://localhost:3000/registerBook", {
+        const response = await fetch("http://localhost:3000/books", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -43,10 +43,10 @@ async function buscarLivros() {
         const dados = await response.json();
 
         tableBody.innerHTML = "";
-        if (dados.success === false) {
+        if (dados.length === 0) {
             tableBody.innerHTML = `
             <tr>
-                <td colspan="5">Erro ao buscar livros</td>
+                <td colspan="5">Nenhum livro cadastrado</td>
             </tr>
             `;
         } else {

@@ -4,6 +4,7 @@ import conn from "./db.js";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import gerarComprovante from "./public/actions/gerarComprovante.js";
 
 dotenv.config();
 
@@ -47,7 +48,7 @@ app.post("/readers", async (req, res) => {
     } catch(error){
         res.status(500).json({
             success: false,
-            message: "Erro ao cadastrar livro"
+            message: "Erro ao cadastrar leitor"
         });
     }
 })
@@ -164,17 +165,62 @@ app.get("/loan", async (req, res) => {
     }
 })
 
-app.put("/loan", async (req, res) => {
+app.put("/loan/:id", async (req, res) => {
     const { id } = req.params;
+    console.log(id);
 
-    const sql = "UPDATE emprestimos SET status = 'devolvido' WHERE id = ?";
-
-    await conn.query(sql, [id]);
-    res.json({
-        success: true,
-        message: "Livro devolvido!"
-    });
+    try{
+        const sql = "UPDATE emprestimos SET status = 'devolvido' WHERE id = ?";
+        await conn.query(sql, [id]);
+        res.json({
+            success: true,
+            message: "Livro devolvido!"
+        });
+    } catch(error) {
+        console.log(error)
+    }
 })
+
+app.get("/loan/:id/comprovante", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [dados] = await conn.query(`
+            SELECT
+                emprestimos.id,
+                livros.titulo,
+                leitores.nome,
+                emprestimos.data_emprestimo,
+                emprestimos.data_devolucao
+            FROM emprestimos
+            INNER JOIN livros
+                ON emprestimos.livro_id = livros.id
+            INNER JOIN leitores
+                ON emprestimos.leitor_id = leitores.id
+            WHERE emprestimos.id = ?
+        `, [id]);
+        if (dados.length === 0) {
+            return res.status(404).json({
+                message: "Empréstimo não encontrado."
+            });
+        }
+        const emprestimo = dados[0];
+        const arquivo = gerarComprovante(emprestimo);
+        res.setHeader(
+            "Content-Type",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        );
+        res.setHeader(
+            "Content-Disposition",
+            `attachment; filename="comprovante.docx"`
+        );
+        res.send(arquivo);
+    } catch (error) {
+        console.error("Erro ao gerar comprovante:", error);
+        res.status(500).json({
+            message: "Erro ao gerar o comprovante."
+        });
+    }
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

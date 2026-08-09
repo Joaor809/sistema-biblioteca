@@ -1,6 +1,5 @@
 import formatarTelefone from "../actions/formatarCelular.js";
 import formatarCpf from "../actions/formatarCPF.js";
-import apagarUser from "../actions/apagarUser.js";
 
 const form = document.querySelector("form");
 
@@ -86,13 +85,13 @@ async function buscarLeitores() {
         } else if (dados.length === 0) {
             tableBody.innerHTML = `
             <tr>
-                <td colspan='6'>Nenhum leitor cadastrado</td>
+                <td colspan='5'>Nenhum leitor cadastrado</td>
             </tr>`;
         } else {
             criarDado(dados);
         }
     } catch (error) {
-        tableBody.innerHTML = "<td colspan='6'>Erro ao buscar leitores</td>"
+        tableBody.innerHTML = "<td colspan='5'>Erro ao buscar leitores</td>"
     } finally {
         carregamento.style.display = "none";
     }
@@ -107,15 +106,8 @@ function criarDado(dados) {
         <td>${formatarTelefone(user.telefone)}</td>
         <td>${user.email}</td>
         <td>${formatarCpf(user.cpf)}</td>
-        <td>
-            <button id='btn-trash'><i class='bi bi-trash'"></i> Apagar</button>
-        </td>
         `;
         tableBody.appendChild(tableRow);
-        const btnTrash = document.querySelector("#btn-trash");
-        btnTrash.addEventListener("click", () => {
-            apagarUser(user.id)
-        });
     });
 }
 
