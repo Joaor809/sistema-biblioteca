@@ -8,6 +8,8 @@
 }
 body{
     display: flex;
+    min-width: 320px;
+    min-height: 100vh;
     background-color: var(--bg-color);
 }
 
@@ -53,6 +55,7 @@ body{
 .container{
     display: flex;
     width: 100%;
+    min-width: 0;
     flex-direction: column;
 }
 header{
@@ -61,7 +64,7 @@ header{
     min-height: 10vh;
     background-color: var(--card-color);
     border-bottom: 1px solid lightgray;
-    margin-bottom: 2rem;
+    margin-bottom: clamp(1rem, 3vw, 2rem);
 }
 main{
     display: flex;
@@ -69,16 +72,16 @@ main{
     flex-direction: column;
     align-items: center;
     width: 100%;
+    padding: 0 clamp(0.75rem, 2vw, 1.5rem) 1.5rem;
 }
 
-/* Formulário para cadastrar os livros no acervo da biblioteca */
 .card-register{
     display: flex;
     justify-content: center;
     flex-direction: column;
     padding: 22px;
     background: var(--card-color);
-    width: 96%;
+    width: min(100%, 1400px);
     border-radius: 12px;
 }
 .card-register h3, .card-register span{
@@ -92,13 +95,14 @@ main{
 }
 .form-groups{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     align-items: center;
 }
 .form-group{
     display: flex;
     flex-direction: column;
     margin: 1rem;
+    min-width: 0;
 }
 .form-group label{
     font-weight: bold;
@@ -123,7 +127,7 @@ main{
     margin-top: .4rem;
 }
 .btn-register button{
-    width: 20%;
+    min-width: 180px;
     height: 36px;
     background-color: var(--btn-color);
     border-radius: 8px;
@@ -144,7 +148,6 @@ main{
     transform: scale(0.97);
 }
 
-/* Tabela com todos os livros cadastrados */
 .books{
     margin: 1rem;
     padding: 22px;
@@ -153,7 +156,7 @@ main{
     align-items: center;
     flex-direction: column;
     background-color: var(--card-color);
-    width: 96%;
+    width: min(100%, 1400px);
 }
 .books h3, .books span{
     color: var(--text-color);
@@ -165,7 +168,6 @@ main{
     font-size: 14px;
 }
 
-/* Tabela com todos os leitores cadastrados */
 .readers{
     margin: 1rem;
     padding: 22px;
@@ -174,7 +176,7 @@ main{
     align-items: center;
     flex-direction: column;
     background-color: var(--card-color);
-    width: 96%;
+    width: min(100%, 1400px);
 }
 .readers h3, .readers span{
     color: var(--text-color);
@@ -184,6 +186,16 @@ main{
 }
 .readers span{
     font-size: 14px;
+}
+.table-responsive{
+    width: 100%;
+    margin-top: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.table-responsive table{
+    min-width: 640px;
+    margin-top: 0;
 }
 table{
     border-collapse: collapse;
@@ -199,7 +211,8 @@ thead th{
     border-bottom: 1px solid lightgray;
 }
 thead th#campo-id,
-tbody td:first-child {
+.books tbody td:first-child,
+.readers tbody td:first-child {
     width: 60px;
     max-width: 60px;
 }
@@ -211,7 +224,6 @@ tbody td{
     border-top: 1px solid lightgray;
 }
 
-/* Símbolo de Carregamento*/
 .loading{
     margin: 1rem;
     display: flex;
@@ -227,7 +239,6 @@ tbody td{
     100%{transform: rotate(360deg);}
 }
 
-/* Empréstimos */
 
 .emprestimos{
     display: flex;
@@ -235,8 +246,9 @@ tbody td{
     flex-direction: column;
     padding: 22px;
     background: var(--card-color);
-    width: 100%;
+    width: min(100%, 1400px);
     border-radius: 12px;
+    margin-bottom: 1rem;
 }
 .emprestimos .form-groups select{
     width: 100%;
@@ -251,19 +263,14 @@ tbody td{
     border-color: lightblue;
     box-shadow: 0 4px 10px #5632f5;
 }
-.emprestimos table{
-    width: 100%;
-}
 
-
-/* Diminuir o título do cabeçalho das tabelas e alterar o tamanho das colunas de acordo com os dados*/
 
 table thead {
     font-size: 14px;
 }
 table{
     width: 100%;
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 th,
@@ -272,7 +279,6 @@ td {
     text-align: center;
 }
 
-/* Botão do empréstimo */
 
 .btn-detalhes,
 .btn-devolver{
@@ -297,4 +303,96 @@ td {
 .btn-detalhes:active,
 .btn-devolver:active{
     transform: scale(0.97);
+}
+
+.cards-dashboard{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(1rem, 3vw, 2rem);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.card {
+    position: relative;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 25px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    margin: 0;
+    color: #374151;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.card p {
+    margin: 5px 0 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.card-leitores .card-icon {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.card-emprestimos .card-icon {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+@media (max-width: 900px) {
+    .form-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cards-dashboard { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 700px) {
+    body { display: block; }
+    .navbar { position: sticky; top: 0; z-index: 10; width: 100%; min-height: auto; padding: 0.65rem 1rem; flex-direction: row; align-items: center; justify-content: space-between; }
+    .logo { margin: 0; }
+    .logo img { width: 34px; }
+    .nav-links { flex-direction: row; gap: 0.25rem; }
+    .nav-links a { padding: 0.6rem; font-size: 0; }
+    .nav-links a i { font-size: 1.15rem; }
+    header { padding: 1rem; }
+    .card-register, .books, .readers, .emprestimos { padding: 1rem; }
+    .form-group { margin: 0.65rem 0; }
+    .btn-register { margin-left: 0; }
+    .btn-register button { width: 100%; }
+}
+
+@media (max-width: 480px) {
+    main { padding: 0 0.75rem 1rem; }
+    .form-groups, .cards-dashboard { grid-template-columns: 1fr; }
+    .card { min-height: 130px; padding: 1.25rem; }
+    .card p { font-size: 28px; }
+    .table-responsive table { min-width: 580px; }
 }
