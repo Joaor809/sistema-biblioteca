@@ -46,7 +46,7 @@ form.addEventListener("submit", async (event) => {
     } else if (cpfNumeros === "") {
         alert("Preencha todos os campos!");
     } else {
-        const response = await fetch("http://localhost:3000/readers", {
+        const response = await fetch("/readers", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -72,7 +72,7 @@ async function buscarLeitores() {
     const carregamento = document.querySelector(".loading");
 
     try {
-        const resposta = await fetch("http://localhost:3000/readers");
+        const resposta = await fetch("/readers");
         const dados = await resposta.json();
         tableBody.innerHTML = "";
 

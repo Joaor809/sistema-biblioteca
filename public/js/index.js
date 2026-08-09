@@ -1,6 +1,6 @@
 async function buscarLivros(){
     try {
-        const response = await fetch("http://localhost:3000/books");
+        const response = await fetch("/books");
         const dados = await response.json()
 
         const campoQuantidadeLivros = document.querySelector(".card-livros");
@@ -11,7 +11,7 @@ async function buscarLivros(){
 }
 async function buscarLeitores(){
     try {
-        const response = await fetch("http://localhost:3000/readers");
+        const response = await fetch("/readers");
         const dados = await response.json()
 
         const campoQuantidadeLeitores = document.querySelector(".card-leitores");
@@ -22,7 +22,7 @@ async function buscarLeitores(){
 }
 async function buscarEmprestimos(){
     try {
-        const response = await fetch("http://localhost:3000/loan");
+        const response = await fetch("/loan");
         const dados = await response.json()
 
         const campoQuantidadeEmprestimos = document.querySelector(".card-emprestimos");

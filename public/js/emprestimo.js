@@ -3,7 +3,7 @@ const diasParaDevolucao = 14;
 
 
 async function buscarLivros() {
-    const response = await fetch("http://localhost:3000/books");
+    const response = await fetch("books");
     const dados = await response.json();
     const selectLivro = document.querySelector("#livro");
     dados.forEach(dado => {
@@ -15,7 +15,7 @@ async function buscarLivros() {
 }
 
 async function buscarLeitores() {
-    const response = await fetch("http://localhost:3000/readers");
+    const response = await fetch("/readers");
     const dados = await response.json();
     const selectLeitor = document.querySelector("#leitor");
     dados.forEach(dado => {
@@ -63,7 +63,7 @@ form.addEventListener("submit", async (event) => {
         return;
     }
 
-    const response = await fetch("http://localhost:3000/loan", {
+    const response = await fetch("/loan", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -85,7 +85,7 @@ form.addEventListener("submit", async (event) => {
 const listLoan = document.querySelector("#lista-emprestimos");
 
 async function buscarEmprestimos() {
-    const response = await fetch("http://localhost:3000/loan");
+    const response = await fetch("/loan");
     const dados = await response.json();
     listLoan.innerHTML = "";
     if (dados.length === 0) {
@@ -124,7 +124,7 @@ function criarLinhaEmprestimo(dados) {
         } else {
             const btnComprovante = tableRow.querySelector(".btn-detalhes");
             btnComprovante.addEventListener("click", () => {
-                window.open(`http://localhost:3000/loan/${emprestimo.id}/comprovante`, "_blank");
+                window.open(`/loan/${emprestimo.id}/comprovante`, "_blank");
             });
         }
     });
@@ -132,7 +132,7 @@ function criarLinhaEmprestimo(dados) {
 
 async function alterarStatus(id) {
     const response = await fetch(
-        `http://localhost:3000/loan/${id}`,
+        `/loan/${id}`,
         {
             method: "PUT"
         }

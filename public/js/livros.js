@@ -17,7 +17,7 @@ form.addEventListener("submit", async (event) => {
     } else if (publisher === "") {
         alert("Preencha todos os campos!");
     } else {
-        const response = await fetch("http://localhost:3000/books", {
+        const response = await fetch("/books", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -39,7 +39,7 @@ form.addEventListener("submit", async (event) => {
 async function buscarLivros() {
     const carregamento = document.querySelector(".loading");
     try {
-        const response = await fetch("http://localhost:3000/books");
+        const response = await fetch("/books");
         const dados = await response.json();
 
         tableBody.innerHTML = "";

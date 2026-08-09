@@ -20,20 +20,7 @@ create table emprestimos(
     leitor_id int not null,
     data_emprestimo date not null,
     data_devolucao date,
-    status enum("emprestado", "devolvido") default "emprestado",
+    status enum('emprestado', 'devolvido') default 'emprestado',
     foreign key (livro_id) references livros(id),
     foreign key (leitor_id) references leitores(id)
 );
-use biblioteca;
-select * from livros;
-INSERT INTO livros (titulo, autor, ano, editora) VALUES
-('Bom Crioulo', 'Adolfo Caminha', 2019, 'Todavia'),
-('A Normalista', 'Adolfo Caminha', 2007, 'Martin Claret'),
-('Casa de Pensão', 'Aluísio Azevedo', 2013, 'Martin Claret'),
-('Ponto de Fuga', 'Ana Maria Machado', 2015, 'Companhia das Letras'),
-('A Última Quimera', 'Ana Miranda', 2013, 'Companhia das Letras'),
-('Dom Casmurro', 'Machado de Assis', 2019, 'Companhia das Letras'),
-('O Cortiço', 'Aluísio Azevedo', 2018, 'Penguin-Companhia'),
-('Grande Sertão: Veredas', 'João Guimarães Rosa', 2019, 'Companhia das Letras'),
-('Capitães da Areia', 'Jorge Amado', 2009, 'Companhia das Letras'),
-('A Hora da Estrela', 'Clarice Lispector', 2020, 'Rocco');
