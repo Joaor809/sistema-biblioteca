@@ -30,7 +30,7 @@ form.addEventListener("submit", async (event) => {
             })
         });
         const dados = await response.json();
-        console.log(dados);
+        if (!response.ok) throw new Error(dados.message || "Não foi possível cadastrar o livro.");
         form.reset();
         buscarLivros();
     }

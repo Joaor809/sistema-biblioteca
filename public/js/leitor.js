@@ -37,13 +37,7 @@ form.addEventListener("submit", async (event) => {
     const name = document.getElementById("nome").value;
     const email = document.getElementById("email").value;
 
-    if (name === "") {
-        alert("Preencha todos os campos!");
-    } else if (email === "") {
-        alert("Preencha todos os campos!");
-    } else if (telefoneNumeros === "") {
-        alert("Preencha todos os campos!");
-    } else if (cpfNumeros === "") {
+    if (name === "" || email === "" || telefoneNumeros === "" || cpfNumeros === ""){
         alert("Preencha todos os campos!");
     } else {
         const response = await fetch("/readers", {
@@ -58,7 +52,7 @@ form.addEventListener("submit", async (event) => {
             })
         });
         const dados = await response.json();
-        console.log(dados);
+        if (!response.ok) throw new Error(dados.message || "Não foi possível cadastrar o leitor.");
         tableBody.innerHTML = "";
         buscarLeitores();
         form.reset();

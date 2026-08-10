@@ -3,7 +3,7 @@ const diasParaDevolucao = 14;
 
 
 async function buscarLivros() {
-    const response = await fetch("books");
+    const response = await fetch("/books");
     const dados = await response.json();
     const selectLivro = document.querySelector("#livro");
     dados.forEach(dado => {
@@ -76,6 +76,10 @@ form.addEventListener("submit", async (event) => {
         })
     });
     const dados = await response.json();
+    if (!response.ok) {
+        alert(dados.message || "Não foi possível registrar o empréstimo.");
+        return;
+    }
     alert(dados.message);
     form.reset();
     buscarEmprestimos();

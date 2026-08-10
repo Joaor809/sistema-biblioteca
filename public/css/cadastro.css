@@ -1,0 +1,83 @@
+@import "./variaveis.css";
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: var(--font);
+}
+body{
+    background-color: var(--bg-color);
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.card{
+    background-color: var(--card-color);
+    padding: 22px;
+    border-radius: 14px;
+}
+.card-header{
+    margin: 10px;
+}
+.card-body{
+    padding: 1rem;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.form-group input{
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid gray;
+}
+.form-group label{
+    position: absolute;
+    margin: 10px;
+    transform: translateY(0);
+    pointer-events: none;
+    transition: all 0.4s ease;
+}
+.cpf-tel{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.form-group input:focus ~ label,
+.form-group input:not(:placeholder-shown) ~ label{
+    font-size: 14px;
+    transform: translateY(-21px);
+    background-color: var(--card-color);
+    padding: 2px;
+    border-radius: 10px;
+}
+.btn{
+    display: flex;
+    justify-content: center;
+}
+.btn button{
+    width: 50%;
+    height: 30px;
+    font-weight: bold;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--btn-color);
+    color: var(--text-link);
+    transition: all .4s ease;
+}
+.btn button:hover{
+    background-color: var(--text-link);
+    color: var(--btn-color);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px black;
+}
+.btn button:active{
+    transform: scale(.9);
+    background-color: var(--btn-color);
+    color: var(--text-link);
+}

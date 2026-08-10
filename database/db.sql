@@ -1,3 +1,4 @@
+-- Active: 1786128250369@@localhost@3306@biblioteca
 create database biblioteca;
 use biblioteca;
 create table livros(
@@ -23,4 +24,13 @@ create table emprestimos(
     status enum('emprestado', 'devolvido') default 'emprestado',
     foreign key (livro_id) references livros(id),
     foreign key (leitor_id) references leitores(id)
+);
+
+create table bibliotecarios(
+    id int auto_increment primary key,
+    nome varchar(150) not null,
+    telefone varchar(20) not null unique,
+    cpf varchar(150) not null unique,
+    email varchar(150) not null unique,
+    senha varchar(150) not null
 );
