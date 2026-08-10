@@ -81,3 +81,13 @@ body{
     background-color: var(--btn-color);
     color: var(--text-link);
 }
+
+@media(max-width: 425px) {
+    .card{
+        width: 100vw;
+    }
+    .cpf-tel{
+        display: flex;
+        flex-direction: column;
+}
+}

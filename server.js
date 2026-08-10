@@ -6,6 +6,8 @@ import path from "path";
 import bcrypt from "bcrypt";
 import { fileURLToPath } from "url";
 import gerarComprovante from "./public/actions/gerarComprovante.js";
+import isAuthenticated from "./auth/middlewares/verificarLogin.js";
+import session from "express-session"
 
 dotenv.config({ quiet: true });
 
@@ -13,24 +15,38 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            secure: false,
+            maxAge: 1000 * 60 * 60
+        }
+    })
+);
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.get("/", (req, res) => {
+app.use("/public", express.static(path.join(__dirname, "public")));
+
+app.get("/", isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "pages", "index.html"));
 });
 
-app.use("/public", express.static(path.join(__dirname, "public")));
-
-app.get("/leitores", (req, res) => {
+app.get("/leitores", isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "pages", "cadastroLeitor.html"));
 });
 
-app.get("/livros", (req, res) => {
+app.get("/livros", isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "pages", "cadastroLivros.html"));
 });
 
-app.get("/emprestimos", (req, res) => {
+app.get("/emprestimos", isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, "pages", "emprestimos.html"));
 });
 
@@ -310,6 +326,70 @@ app.post("/librarian", async (req, res) => {
   }
 });
 
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "auth", "login.html"))
+})
+
+app.post("/login", async (req, res) => {
+  const { cpfNumeros, senha } = req.body || {};
+
+  if (!cpfNumeros || !senha) {
+    return res.status(400).json({
+      success: false,
+      message: "CPF e senha são obrigatórios.",
+    });
+  }
+
+  try {
+    const sql = "SELECT * FROM bibliotecarios WHERE cpf = ?";
+    const [resultado] = await conn.query(sql, [cpfNumeros]);
+
+    if (resultado.length === 0) {
+      return res.status(401).json({ success: false, message: "CPF ou senha inválidos." });
+    }
+
+    if (resultado.length > 0){
+      const user = resultado[0];
+      const senhaValida = await bcrypt.compare(senha, user.senha);
+      if(!senhaValida){
+        return res.status(401).json({success: false, message: "CPF ou senha inválidos."});
+      } else{
+        req.session.login = true;
+        req.session.userId = user.id;
+        req.session.nome = user.nome;
+        req.session.email = user.email;
+        req.session.cpf = user.cpf;
+        req.session.telefone = user.telefone;
+        return req.session.save((erro) => {
+          if (erro) {
+            console.error("Erro ao salvar sessão:", erro.message);
+            return res.status(500).json({
+              success: false,
+              message: "Erro ao iniciar a sessão.",
+            });
+          }
+
+          return res.json({ success: true, redirect: "/" });
+        });
+      }
+    }
+
+  } catch(error){
+    console.error("Erro ao buscar bibliotecário:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Erro ao buscar bibliotecário",
+    });
+  }
+
+});
+app.get("/teste", (req, res) => {
+  res.send(`<ul>
+      <li>${req.session.nome}</li>
+      <li>${req.session.email}</li>
+      <li>${req.session.telefone}</li>
+    </ul>`);
+})
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
