@@ -35,3 +35,4 @@ create table bibliotecarios(
     email varchar(150) not null unique,
     senha varchar(150) not null
 );
+select * from bibliotecarios;
